@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="axion.service.AxionMapper" >
+
+    <resultMap id="game" type="axion.domain.Game">
+        <id property="id" column="ID"/>
+        <result property="victoryCondition" column="VICTORY_CONDITION" typeHandler="axion.service.handler.CardTypeHandler"/>
+        <collection property="players" column="ID" select="findPlayersByGameId" />
+    </resultMap>
+
+    <insert id="createPlayer" parameterType="axion.domain.Player" keyProperty="id" useGeneratedKeys="true">
+        INSERT INTO PLAYER (USERNAME, PASSWORD)
+        VALUES (#{username}, SHA(#{password}));
+    </insert>
+
+    <insert id="createGame" parameterType="axion.domain.Game" keyProperty="id" useGeneratedKeys="true">
+        INSERT INTO GAME (NAME, PASSWORD, VICTORY_CONDITION)
+        VALUES (#{name}, SHA(#{password}), #{victoryCondition,typeHandler=axion.service.handler.CardTypeHandler};
+    </insert>
+
+    <insert id="addPlayerToGame" useGeneratedKeys="true">
+        INSERT INTO GAME_PLAYER (PLAYER_ID, GAME_ID)
+        VALUES (#{player.id}, #{game.id})
+        ON DUPLICATE KEY UPDATE ID = ID
+    </insert>
+
+    <insert id="saveCard">
+        INSERT INTO DECK (GAME_ID, TYPE, CLASS_NAME)
+        VALUES (#{game.id}, #{type}, #{className})
+        ON DUPLICATE KEY UPDATE
+    </insert>
+
+    <update id="saveGame">
+        UPDATE GAME SET
+            NAME = #{name},
+            VICTORY_CONDITION = #{victoryCondition,typeHandler=axion.service.handler.CardTypeHandler}
+        WHERE ID = #{id}
+    </update>
+
+    <select id="authenticate" resultType="java.lang.Integer">
+        SELECT COUNT(*) FROM PLAYER WHERE USERNAME = #{username} AND PASSWORD = SHA(#{password})
+    </select>
+
+    <select id="findPlayer" resultType="axion.domain.Player">
+        SELECT * FROM PLAYER WHERE USERNAME = #{username}
+    </select>
+
+    <select id="getGames" resultMap="game">
+        SELECT * FROM GAME;
+    </select>
+
+    <select id="getGame" resultMap="game">
+        SELECT * FROM GAME WHERE ID = #{id};
+    </select>
+
+    <select id="findPlayersByGameId" resultType="axion.domain.Player">
+        SELECT P.*
+          FROM PLAYER P
+          JOIN GAME_PLAYER GP
+            ON GP.PLAYER_ID = P.ID
+           AND GP.GAME_ID = #{id}
+    </select>
+
+    <select id="validateGamePassword" resultType="java.lang.Integer">
+        SELECT COUNT(*) FROM GAME WHERE ID = #{game.id} AND PASSWORD = SHA(#{password})
+    </select>
+
+</mapper>
