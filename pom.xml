@@ -45,7 +45,7 @@
 		<jetty.version>7.6.13.v20130916</jetty.version>
         <mybatis-guice.version>3.2</mybatis-guice.version>
         <mybatis.version>3.1.1</mybatis.version>
-        <mysql-connector.version>5.1.21</mysql-connector.version>
+        <mysql-connector.version>8.0.16</mysql-connector.version>
         <guice-version>3.0</guice-version>
         <reflections-version>0.9.9</reflections-version>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
