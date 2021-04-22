@@ -44,7 +44,7 @@
 		<wicket.version>6.18.0</wicket.version>
 		<jetty.version>7.6.13.v20130916</jetty.version>
         <mybatis-guice.version>3.2</mybatis-guice.version>
-        <mybatis.version>3.1.1</mybatis.version>
+        <mybatis.version>3.5.6</mybatis.version>
         <mysql-connector.version>5.1.21</mysql-connector.version>
         <guice-version>3.0</guice-version>
         <reflections-version>0.9.9</reflections-version>
