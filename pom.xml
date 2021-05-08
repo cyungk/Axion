@@ -41,7 +41,7 @@
 		</license>
 	</licenses>
 	<properties>
-		<wicket.version>6.18.0</wicket.version>
+		<wicket.version>7.17.0</wicket.version>
 		<jetty.version>7.6.13.v20130916</jetty.version>
         <mybatis-guice.version>3.2</mybatis-guice.version>
         <mybatis.version>3.1.1</mybatis.version>
